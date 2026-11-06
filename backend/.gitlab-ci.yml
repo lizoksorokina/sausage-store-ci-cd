@@ -6,7 +6,7 @@ build-backend-code-job:
     stage: build
     rules:
         - changes:
-          - backend/**/*
+           - backend/**/*
     script:
         - cd backend
         - mvn package
