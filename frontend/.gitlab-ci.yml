@@ -1,0 +1,27 @@
+stages:
+    - build
+    - notify
+
+build-frontend-code-job:
+    stage: build
+    rules:
+        - changes:
+            - "frontend/**/*"
+    script:
+        - cd frontend
+        - npm install
+        - npm run build
+    artifacts:
+        paths:
+            - frontend/dist/frontend
+
+telegram-notification-frontend:
+    stage: notify
+    needs:
+        - build-frontend-code-job
+    rules:
+        - if: '$CI_COMMIT_MESSAGE =~ /send notification/'
+          changes:
+              - "frontend/**/*"
+    script:
+        - curl "$CI_PROJECT_URL/-/jobs/artifacts/$CI_COMMIT_SHA/download?job=build-frontend-code-job"
