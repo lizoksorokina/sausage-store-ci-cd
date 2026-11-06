@@ -4,7 +4,7 @@ stages:
 
 build-frontend-code-job:
     stage: build
-    image: node:20
+    image: node:10
     rules:
         - changes:
             - "frontend/**/*"
