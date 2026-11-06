@@ -9,7 +9,7 @@ build-backend-code-job:
         - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository
     artifacts:
         paths:
-          - backend/target/*.jar
+          - backend/target/
 
 telegram-notification-backend:
     stage: notify
