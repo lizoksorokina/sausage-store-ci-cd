@@ -1,0 +1,25 @@
+stages:
+    - build
+    - notify
+
+build-backend-code-job:
+    stage: build
+    rules:
+        - changes:
+          - backend/**/*
+    script:
+        - cd backend
+        - mvn package
+    artifacts:
+        paths:
+          - backend/target/*.jar
+
+telegram-notification-backend:
+    stage: notify
+    needs: build-backend-code-job
+    rules:
+        - if: $CI_COMMIT_MESSAGE =~ /send notification/
+          changes:
+            - backend/**/*
+    script: 
+        - "curl $CI_PROJECT_URL/-/jobs/artifacts/$CI_COMMIT_SHA/download?job=$CI_JOB_NAME"
