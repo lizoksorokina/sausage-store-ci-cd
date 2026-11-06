@@ -17,6 +17,7 @@ build-backend-code-job:
 
 telegram-notification-backend:
     stage: notify
+    image: curlimages/curl:latest
     needs: 
         - build-backend-code-job
     rules:
