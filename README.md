@@ -63,8 +63,6 @@ npm run build
 npx http-server ./dist/frontend/ -p 80 --proxy http://localhost:8080
 ```
 
-Затем открыть [http://localhost](http://localhost).
-
 ## Следующие шаги
 
 - unit-тесты фронтенда в пайплайне (сейчас спеки в `src/**/*.spec.ts` — заготовки,
