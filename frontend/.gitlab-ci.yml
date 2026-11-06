@@ -18,6 +18,7 @@ build-frontend-code-job:
 
 telegram-notification-frontend:
     stage: notify
+    image: curlimages/curl:latest
     needs:
         - build-frontend-code-job
     rules:
