@@ -1,3 +1,6 @@
+include:
+  - template: Security/SAST.gitlab-ci.yml
+
 build-backend-code-job:
     stage: build
     image: maven:3.9-eclipse-temurin-17
@@ -10,6 +13,19 @@ build-backend-code-job:
     artifacts:
         paths:
           - backend/target/
+    cache:
+        paths:
+          - ${CI_PROJECT_DIR}/.m2/repository 
+
+spotbugs-sast:
+    stage: test
+    needs:
+        - job: build-backend-code-job
+          artifacts: true
+    variables:
+        COMPILE: "false"
+        SAST_JAVA_VERSION: 11
+        MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository 
 
 telegram-notification-backend:
     stage: notify
