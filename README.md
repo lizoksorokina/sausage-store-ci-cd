@@ -1,49 +1,13 @@
-# Sausage Store — учебный проект по CI/CD
+# Sausage Store —  проект по CI/CD
 
-![image](https://user-images.githubusercontent.com/9394918/121517767-69db8a80-c9f8-11eb-835a-e98ca07fd995.png)
-
-Проект выполнен в рамках курса **DevOps** (Яндекс Практикум), блок **CI/CD**.
 «Сосисочная у дома» — демонстрационный интернет-магазин, вокруг которого
 собран пайплайн непрерывной интеграции: сборка, статический анализ кода и
 уведомления о результате.
 
-## Зачем этот репозиторий
 
-Бизнес-логика здесь намеренно простая: каталог товаров, корзина, оформление
-заказа. Главная ценность проекта — **CI/CD-обвязка** вокруг приложения.
-
-**CI/CD (Continuous Integration / Continuous Delivery)** — практика, при которой
-каждое изменение кода автоматически собирается и проверяется. Разработчик
-делает `git push`, сервер сам поднимает окружение, собирает проект, запускает
-проверки, публикует артефакты и уведомляет команду. Ручные «собери у себя и
-залей на сервер» из процесса уходят.
-
-В этом проекте цикл реализован на self-hosted **GitLab CE** + **gitlab-runner**
-(docker-executor): описание пайплайна лежит в `.gitlab-ci.yml` в корне
+В этом проекте цикл реализован на GitLab CE, описание пайплайна лежит в `.gitlab-ci.yml` в корне
 репозитория и разнесено по каталогам `backend/` и `frontend/`.
 
-## Технологии
-
-| Слой | Стек |
-|---|---|
-| Frontend | TypeScript, Angular 6, Bootstrap |
-| Backend | Java 16, Spring Boot 2.5, Spring Data JPA |
-| База данных | H2 (in-memory) |
-| CI/CD | GitLab CE, gitlab-runner, GitLab SAST |
-| Лицензия | MIT |
-
-## Пайплайн
-
-```mermaid
-flowchart LR
-    A[push / merge request] --> B[build]
-    B --> C[test]
-    C --> D[notify]
-    B --- B1[frontend: npm install && ng build]
-    B --- B2[backend: mvn package]
-    C --- C1[spotbugs-sast]
-    D --- D1[telegram-notification-*]
-```
 
 Стадии объявлены в корневом `.gitlab-ci.yml`, джобы — в `backend/.gitlab-ci.yml`
 и `frontend/.gitlab-ci.yml`, плюс подключён шаблон `Security/SAST.gitlab-ci.yml`.
