@@ -2,3 +2,7 @@ stages:
     - build
     - tests
     - deploy
+
+include:
+    - '.backend/.gitlab-ci.yml'
+    - '.frontend/.gitlab-ci.yml'
